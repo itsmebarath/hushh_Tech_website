@@ -1,0 +1,30 @@
+import { InvestorProfileInput, InvestorProfileRecord, InvestorProfile } from "../../types/investorProfile";
+export type FlowStep = "loading" | "form" | "review" | "complete";
+export declare function useInvestorProfileLogic(): {
+    step: FlowStep;
+    isProcessing: boolean;
+    profile: InvestorProfileRecord;
+    error: string;
+    userData: {
+        name: string;
+        email: string;
+    };
+    isApplePassLoading: boolean;
+    isGooglePassLoading: boolean;
+    isWalletPreviewOpen: boolean;
+    appleWalletSupported: boolean;
+    appleWalletSupportMessage: string;
+    googleWalletSupported: boolean;
+    googleWalletSupportMessage: string;
+    passReady: boolean;
+    profileUrl: string;
+    walletPreview: import("../../services/walletPass").WalletPreviewModel;
+    handleFormSubmit: (input: InvestorProfileInput) => Promise<void>;
+    handleProfileConfirm: (updates: Partial<InvestorProfile>) => Promise<void>;
+    handleCopyURL: () => void;
+    handleShare: () => Promise<void>;
+    handleAppleWalletDownload: () => Promise<void>;
+    handleGoogleWalletDownload: () => Promise<void>;
+    openWalletPreview: () => void;
+    closeWalletPreview: () => void;
+};

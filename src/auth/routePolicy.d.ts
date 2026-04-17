@@ -1,0 +1,10 @@
+export declare const GUEST_AUTH_ROUTE_PREFIXES: readonly ["/login", "/signup", "/auth/callback", "/sign-nda", "/document-viewer"];
+export declare const PUBLIC_MARKETING_ROUTE_PREFIXES: readonly ["/", "/privacy-policy", "/faq", "/carrer-privacy-policy", "/california-privacy-policy", "/eu-uk-jobs-privacy-policy", "/investor-guide", "/about", "/services", "/career", "/community", "/contact", "/benefits", "/hushh-ai", "/kai", "/kai-india", "/studio", "/kyc-flow", "/kyc-demo", "/a2a-playground"];
+export declare const AUTHENTICATED_ACCOUNT_ROUTE_PREFIXES: readonly ["/profile", "/delete-account", "/hushh-user-profile", "/onboarding", "/user-registration", "/investor-profile", "/user-profile", "/your-profile", "/nda-form"];
+export declare const PUBLIC_SHARED_PROFILE_ROUTE_PREFIXES: readonly ["/investor/", "/hushhid/"];
+export declare function isGuestAuthRoute(pathname: string): boolean;
+export declare function isPublicMarketingRoute(pathname: string): boolean;
+export declare function isAuthenticatedAccountRoute(pathname: string): boolean;
+export declare function isPublicSharedProfileRoute(pathname: string): boolean;
+export declare function canGuestAccessRoute(pathname: string): boolean;
+export declare function buildLoginRedirectPath(pathname: string, search?: string, hash?: string, fallback?: string): string;

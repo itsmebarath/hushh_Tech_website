@@ -1,0 +1,41 @@
+export declare const NDA_OPTION = "Sensitive Documents (NDA approval Req.)";
+export declare const MARKET_UPDATES_OPTION = "Market Updates";
+export declare const PINNED_SLUGS: string[];
+export interface UnifiedPost {
+    id: string;
+    title: string;
+    date: string;
+    slug?: string;
+    isApiReport?: boolean;
+    description?: string;
+    category?: string;
+}
+export declare const toTitleCase: (s: string) => string;
+export declare const getPostDescription: (post: UnifiedPost) => string;
+export declare const formatDisplayDate: (dateStr: string) => string;
+export declare const getPostUrl: (post: UnifiedPost) => string;
+export declare const useCommunityListLogic: () => {
+    filteredContent: UnifiedPost[];
+    dropdownOptions: string[];
+    apiLoading: boolean;
+    apiError: string;
+    selectedCategory: string;
+    searchQuery: string;
+    setSearchQuery: import("react").Dispatch<import("react").SetStateAction<string>>;
+    ndaApproved: boolean;
+    showNdaModal: boolean;
+    setShowNdaModal: import("react").Dispatch<import("react").SetStateAction<boolean>>;
+    showNdaDocModal: boolean;
+    setShowNdaDocModal: import("react").Dispatch<import("react").SetStateAction<boolean>>;
+    ndaMetadata: any;
+    ndaLoading: boolean;
+    session: import("@supabase/auth-js").Session;
+    onCategoryChange: (cat: string) => Promise<void>;
+    handleBackClick: () => void;
+    setNdaApproved: import("react").Dispatch<import("react").SetStateAction<boolean>>;
+    getPostDescription: (post: UnifiedPost) => string;
+    formatDisplayDate: (dateStr: string) => string;
+    getPostUrl: (post: UnifiedPost) => string;
+    toTitleCase: (s: string) => string;
+    NDA_OPTION: string;
+};
