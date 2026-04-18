@@ -45,10 +45,10 @@ export default function CommunityPostPage() {
         />
 
         {/* Desktop: Full-screen iframe */}
-        <div className="hidden md:block flex-1">
+        <div className="hidden md:block flex-1 min-h-[calc(100vh-88px)]">
           <iframe
             src={`${post.pdfUrl}#toolbar=1&navpanes=1&scrollbar=1&view=FitH`}
-            className="w-full h-[calc(100vh-64px)] border-none"
+            className="w-full h-full border-none"
             title={post.title}
           />
         </div>

@@ -151,8 +151,8 @@ export default function Contact() {
         <Text mt={4} fontSize={{ base: "md", md: "md" }} color="gray.600">
           For career-related inquiries, please visit our{' '}
           <ChakraLink
-            href="/career"
-            // target="_blank"
+            as={Link}
+            to="/career"
             rel="noopener noreferrer"
             color="#0AADBC"
             fontWeight="medium"

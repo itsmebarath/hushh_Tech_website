@@ -26,10 +26,10 @@ const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 // Validate required environment variables
 if (!SUPABASE_URL) {
-  console.error('[A2A Playground] VITE_SUPABASE_URL environment variable is required');
+  console.warn('[A2A Playground] VITE_SUPABASE_URL environment variable is missing. A2A features will be limited.');
 }
 if (!SUPABASE_ANON_KEY) {
-  console.error('[A2A Playground] VITE_SUPABASE_ANON_KEY environment variable is required');
+  console.warn('[A2A Playground] VITE_SUPABASE_ANON_KEY environment variable is missing. A2A features will be limited.');
 }
 
 // A2A Protocol Message Type - Extended for Agentic Negotiation

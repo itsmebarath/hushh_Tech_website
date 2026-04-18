@@ -153,11 +153,7 @@ const FundA = () => {
 
   return (
     <div className="bg-white text-gray-900 min-h-screen antialiased flex flex-col selection:bg-hushh-blue selection:text-white">
-      {/* ═══ Header ═══ */}
-      <HushhTechBackHeader
-        onBackClick={() => navigate("/")}
-        rightType="hamburger"
-      />
+      {/* ═══ Header is now global in App.tsx ═══ */}
 
       {/* ═══ Main ═══ */}
       <main className="px-6 flex-grow max-w-md mx-auto w-full pb-32">

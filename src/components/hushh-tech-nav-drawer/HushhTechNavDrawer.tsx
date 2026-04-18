@@ -18,17 +18,19 @@ interface NavItem {
 
 const NAV_ITEMS: NavItem[] = [
   { icon: "home", label: "Home", path: "/" },
-  { icon: "menu_book", label: "Our Philosophy", path: "/philosophy" },
+  { icon: "menu_book", label: "Our Philosophy", path: "/about/philosophy" },
   { icon: "pie_chart", label: "Fund A", path: "/discover-fund-a" },
   { icon: "groups", label: "Community", path: "/community" },
-  { icon: "verified_user", label: "KYC Studio Alpha", path: "/kyc" },
+  { icon: "verified_user", label: "Verify Identity", path: "/kyc-verification" },
 ];
 
+// Note: /unlock-coins and /kyc routes are currently not defined in App.tsx
+// Using /benefit as a fallback for the highlight item or keeping as placeholder
 const HIGHLIGHT_ITEM: NavItem = {
   icon: "lock",
-  label: "Unlock 300K Coins",
-  subtitle: "$1 or use coupon code",
-  path: "/unlock-coins",
+  label: "Exclusive Benefits",
+  subtitle: "View member advantages",
+  path: "/benefits",
   highlight: true,
 };
 

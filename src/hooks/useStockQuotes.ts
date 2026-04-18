@@ -159,23 +159,38 @@ interface EdgeFunctionResponse {
   error?: string;
 }
 
+const CACHE_KEY = 'hushh_market_quotes_cache';
+
 // Generate fallback data for when API is not available
 function generateFallbackData(): StockQuote[] {
+  // Try to load from localStorage first
+  try {
+    const cached = localStorage.getItem(CACHE_KEY);
+    if (cached) {
+      const parsed = JSON.parse(cached);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed;
+      }
+    }
+  } catch (e) {
+    console.warn('Failed to load stock cache:', e);
+  }
+
   return STOCK_SYMBOLS.map(symbol => ({
     symbol,
     displaySymbol: STOCK_SHORT_SYMBOLS[symbol] || symbol,
     name: STOCK_NAMES[symbol] || symbol,
     currentPrice: 0,
     change: 0,
-    percentChange: (Math.random() - 0.5) * 4, // Random -2% to +2%
-    isUp: Math.random() > 0.4,
+    percentChange: 0,
+    isUp: true,
     logo: STOCK_LOGOS[symbol] || '',
   }));
 }
 
 // Hook for fetching stock quotes via Supabase edge function
 export function useStockQuotes(refreshInterval = 120000) {
-  const [quotes, setQuotes] = useState<StockQuote[]>(generateFallbackData());
+  const [quotes, setQuotes] = useState<StockQuote[]>(() => generateFallbackData());
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
@@ -220,6 +235,13 @@ export function useStockQuotes(refreshInterval = 120000) {
         
         setQuotes(mappedQuotes);
         setLastUpdated(new Date());
+
+        // Save to cache
+        try {
+          localStorage.setItem(CACHE_KEY, JSON.stringify(mappedQuotes));
+        } catch (e) {
+          console.warn('Failed to save stock cache:', e);
+        }
       }
       setLoading(false);
     } catch (err) {

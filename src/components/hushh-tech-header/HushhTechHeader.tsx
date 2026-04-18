@@ -7,6 +7,7 @@
  * Below: Scrolling stock ticker with live quotes (Google, Apple, etc.)
  */
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import hushhLogo from "../images/Hushhogo.png";
 import HushhTechNavDrawer from "../hushh-tech-nav-drawer/HushhTechNavDrawer";
 import { useStockQuotes, StockQuote } from "../../hooks/useStockQuotes";
@@ -71,7 +72,7 @@ const HushhTechHeader: React.FC<HushhTechHeaderProps> = ({
         {/* ── Top bar: Logo + Hamburger ── */}
         <div className="px-6 py-4 flex justify-between items-center">
           {/* Logo + Brand */}
-          <div className="flex items-center gap-3">
+          <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
             <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0 overflow-hidden">
               <img
                 src={hushhLogo}
@@ -87,7 +88,7 @@ const HushhTechHeader: React.FC<HushhTechHeaderProps> = ({
                 Technologies
               </span>
             </div>
-          </div>
+          </Link>
 
           {/* Hamburger menu button */}
           <button

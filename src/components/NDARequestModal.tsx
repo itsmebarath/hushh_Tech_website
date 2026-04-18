@@ -35,8 +35,8 @@ interface NDARequestModalProps {
 // Format a given phone number string into international format with a space between the country code and the rest.
 // If the number does not start with a '+', one is added. Then, using libphonenumber-js, we format it.
 const formatPhoneNumber = (phone: string): string => {
-  // Ensure the number starts with a plus sign.
-  if (!phone.startsWith("+")) {
+  // Ensure the number starts with a plus sign, but only if not already present
+  if (phone && !phone.startsWith("+")) {
     phone = `+${phone}`;
   }
   const phoneNumber = parsePhoneNumberFromString(phone);
@@ -172,19 +172,19 @@ const InvestorProfilePage: React.FC<NDARequestModalProps> = ({
 
       console.log("Request Access Response:", resData);
       
-      // Toast messages based on response (existing logic)
-      if (resData === "Approved" || (typeof resData === "string" && resData.startsWith("Requested permission"))) {
+      const statusLower = typeof resData === "string" ? resData.toLowerCase() : "";
+      
+      // Toast messages based on response
+      if (statusLower === "approved" || statusLower.startsWith("requested permission")) {
         toast({ title: "Request Submitted", description: "Your access request has been sent and is pending approval.", status: "success", duration: 4000, isClosable: true });
-        window.location.href = "/"; // Or a more appropriate page
-        
-        // Close modal if applicable after successful submission
+        window.location.href = "/";
         handleClose();
-      } else if (resData === "Rejected") {
+      } else if (statusLower === "rejected") {
         toast({ title: "Request Rejected", description: "Your request was rejected. Please re-apply after 2-3 days.", status: "error", duration: 4000, isClosable: true });
-      } else if (resData === "Pending") {
+      } else if (statusLower === "pending") {
         toast({ title: "Request Pending", description: "Your request is still under review.", status: "info", duration: 4000, isClosable: true });
         onSubmit(resData);
-      } else if (resData === "Pending: Waiting for NDA Process") {
+      } else if (statusLower === "pending: waiting for nda process") {
         toast({ 
           title: "NDA Process Required", 
           description: "Please complete the NDA process to proceed.", 

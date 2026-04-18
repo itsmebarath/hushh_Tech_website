@@ -134,11 +134,11 @@ export default function SignupPage() {
         {/* ── Terms Footer ── */}
         <p className="text-[11px] leading-[16px] text-gray-400 text-center font-light">
           By continuing, you agree to our{" "}
-          <Link to="/terms" className="underline underline-offset-2">
+          <Link to="/terms-of-service" className="underline underline-offset-2">
             Terms
           </Link>{" "}
           and{" "}
-          <Link to="/privacy" className="underline underline-offset-2">
+          <Link to="/privacy-policy" className="underline underline-offset-2">
             Privacy Policy
           </Link>
         </p>

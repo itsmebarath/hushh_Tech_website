@@ -226,9 +226,14 @@ export const AuthSessionProvider: React.FC<{
         return;
       }
 
-      const nextStatus =
-        payload.reason === "signed_out" ? "anonymous" : "invalidated";
-      void clearLocalSession(nextStatus, payload.reason, false);
+      // Force immediate re-sync for all tabs
+      if (payload.reason === "signed_out" || payload.reason === "deleted") {
+        void clearLocalSession(
+          payload.reason === "signed_out" ? "anonymous" : "invalidated",
+          payload.reason,
+          false
+        );
+      }
     };
 
     window.addEventListener("focus", handleWindowFocus);

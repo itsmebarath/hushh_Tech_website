@@ -21,12 +21,12 @@ import CommunityPostPage from './pages/community/post-ui';
 import ReportDetailPage from './pages/reports/reportDetail';
 import BenefitsPage from './pages/benefits';
 import PrivacyPolicy from './pages/privacy-policy';
+import TermsOfService from './pages/terms-of-service';
 import CareersPrivacyPolicy from './pages/career-privacy-policy';
 import CaliforniaPrivacyPolicy from './pages/california-privacy-policy';
 import EUUKPrivacyPolicy from './pages/eu-uk-privacy-policy';
 import DeleteAccountPage from './pages/delete-account';
 import { useEffect, ReactNode } from 'react';
-import Profile from './pages/profile';
 import AuthCallback from './pages/AuthCallback';
 import KYCVerificationPage from './pages/kyc-verification/page';
 import NDARequestModalComponent from './components/NDARequestModal';
@@ -58,6 +58,7 @@ import OnboardingBankDetailsStep from './pages/onboarding/step-9/ui';
 import VerifyIdentityPage from './pages/onboarding/verify-identity/ui';
 import VerifyCompletePage from './pages/onboarding/verify-complete/ui';
 import MeetCeoPage from './pages/onboarding/meet-ceo/ui';
+import HushhTechHeader from './components/hushh-tech-header/HushhTechHeader';
 import InvestorGuidePage from './pages/onboarding/InvestorGuide';
 import KYCDemoPage from './pages/kyc-demo';
 import KycFlowPage from './pages/kyc-flow';
@@ -80,95 +81,41 @@ import AuthRequiredRoute from './components/AuthRequiredRoute';
 const GA_TRACKING_ID = 'G-R58S9WWPM0';
 const KaiIndiaApp = React.lazy(() => import('./kai-india/pages'));
 
-// Content wrapper component that applies conditional margin
+// Content wrapper component that applies a consistent top padding
 const ContentWrapper = ({ children }: { children: ReactNode }) => {
-  const location = useLocation();
-  const isHomePage = location.pathname === '/' || location.pathname === '/signUp' || location.pathname === '/solutions';
-  const isAuthCallback = location.pathname.startsWith('/auth/callback');
-  const isUserRegistration = location.pathname === '/user-registration';
-  const isOnboarding = location.pathname.startsWith('/onboarding');
-  const isKycFlow = location.pathname.startsWith('/kyc-flow');
-  const isKycDemo = location.pathname.startsWith('/kyc-demo');
-  const isA2APlayground = location.pathname.startsWith('/a2a-playground');
-  const isInvestorGuide = location.pathname === '/investor-guide';
-  const isHushhAI = location.pathname.startsWith('/hushh-ai');
-  const isKai = location.pathname.startsWith('/kai');
-  const isStudio = location.pathname.startsWith('/studio');
-  const isHushhUserProfile = location.pathname.startsWith('/hushh-user-profile');
-  const isSignNda = location.pathname.startsWith('/sign-nda');
-  const isDocumentViewer = location.pathname.startsWith('/document-viewer');
-  const isInvestorProfile = location.pathname.startsWith('/investor-profile');
-  const isPublicInvestorProfile = location.pathname.startsWith('/investor/');
-  const isDiscoverFundA = location.pathname === '/discover-fund-a';
-  const isCommunity = location.pathname.startsWith('/community');
-  const isDeleteAccount = location.pathname === '/delete-account';
-  const isLogin = location.pathname.toLowerCase() === '/login';
-  const isSignup = location.pathname.toLowerCase() === '/signup';
-  const isProfile = location.pathname === '/profile';
-
   return (
-    <div className={`${isHomePage || isAuthCallback || isUserRegistration || isOnboarding || isKycFlow || isKycDemo || isA2APlayground || isInvestorGuide || isHushhAI || isKai || isStudio || isHushhUserProfile || isSignNda || isDocumentViewer || isInvestorProfile || isPublicInvestorProfile || isDiscoverFundA || isCommunity || isDeleteAccount || isLogin || isSignup || isProfile ? '' : 'mt-20'}`}>
+    <div className="pt-20">
       {children}
     </div>
   );
 };
 
-// Layout visibility hook - determines which components to show based on route
+// Consolidated visibility logic - determines which components to show based on route
 const useLayoutVisibility = () => {
   const location = useLocation();
-  const isHomePage = location.pathname === '/';
-  const isHushhAI = location.pathname.startsWith('/hushh-ai');
-  const isKai = location.pathname.startsWith('/kai');
-  const isStudio = location.pathname.startsWith('/studio');
-  const isOnboarding = location.pathname.startsWith('/onboarding');
-  const isProfile = location.pathname === '/profile';
-  const isFundA = location.pathname === '/discover-fund-a';
-  const isCommunity = location.pathname.startsWith('/community');
-  const isDeleteAccount = location.pathname === '/delete-account';
-  const isLogin = location.pathname.toLowerCase() === '/login';
-  const isSignup = location.pathname.toLowerCase() === '/signup';
-  const isSignNda = location.pathname.startsWith('/sign-nda');
-  const isDocumentViewer = location.pathname.startsWith('/document-viewer');
-  const isHushhUserProfile = location.pathname.startsWith('/hushh-user-profile');
+  const path = location.pathname.toLowerCase();
+  
+  // Routes where we should NEVER show global footer/mobile nav
+  const isSpecialApp = path.startsWith('/hushh-ai') || 
+                       path.startsWith('/kai') || 
+                       path.startsWith('/studio') || 
+                       path.startsWith('/auth/callback');
 
-  // All pages using HushhTechHeader — hide old global Navbar/Footer
-  const isKycFlow = location.pathname.startsWith('/kyc-flow');
-  const isKycDemo = location.pathname.startsWith('/kyc-demo');
-  const isA2APlayground = location.pathname.startsWith('/a2a-playground');
-  const isPublicInvestorProfile = location.pathname.startsWith('/investor/');
-  const hideOld = isHushhAI || isKai || isStudio || isHomePage || isOnboarding || isProfile || isFundA || isCommunity || isDeleteAccount || isLogin || isSignup || isSignNda || isDocumentViewer || isHushhUserProfile || isKycFlow || isKycDemo || isA2APlayground || isPublicInvestorProfile;
   return {
-    showNavbar: !hideOld,
-    showFooter: !hideOld,
-    showMobileNav: !hideOld,
+    showNavbar: false, // Unified premium header used instead
+    showFooter: !isSpecialApp,
+    showMobileNav: !isSpecialApp,
   };
 };
 
 // Google Analytics setup function
 const initializeGoogleAnalytics = () => {
-  // Check if gtag is already loaded
-  if (typeof window !== 'undefined' && !window.gtag) {
-    // Create script element for gtag
-    const script = document.createElement('script');
-    script.async = true;
-    script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`;
-    document.head.appendChild(script);
-
-    // Initialize gtag
-    script.onload = () => {
-      window.dataLayer = window.dataLayer || [];
-      function gtag(...args: any[]) {
-        window.dataLayer.push(args);
-      }
-      window.gtag = gtag;
-      gtag('js', new Date());
-      gtag('config', GA_TRACKING_ID);
-    };
+  if (typeof window !== 'undefined' && window.gtag) {
+    window.gtag('config', GA_TRACKING_ID);
   }
 };
 
 function App() {
-  // Initialize Google Analytics
   useEffect(() => {
     initializeGoogleAnalytics();
   }, []);
@@ -180,27 +127,29 @@ function App() {
     
     return (
       <div className="min-h-screen flex flex-col">
-        {showNavbar && <Navbar />}
+        <HushhTechHeader />
         <ContentWrapper>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/about/leadership" element={<Leadership />} />
             <Route path="/about/philosophy" element={<Philosophy />} />
-            <Route path="/Login" element={<LoginPage />} />
-            <Route path="/Contact" element={<Contact />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/contact" element={<Contact />} />
             <Route path="/benefits" element={<BenefitsPage />} />
             <Route path='/services/consumers' element={<Consumers />} />
             <Route path='/services/business' element={<Business />} />
-            <Route path='/Signup' element={<SignupPage />} />
+            <Route path='/signup' element={<SignupPage />} />
             <Route path='/faq' element={<Faq />} />
             <Route path='/profile' element={
               <AuthRequiredRoute>
-                <Profile />
+                <HushhUserProfilePage />
               </AuthRequiredRoute>
             } />
             <Route path="/career" element={<Career />} />
             <Route path="/career/*" element={<Career />} />
             <Route path='/privacy-policy' element={<PrivacyPolicy />} />
+            <Route path='/terms-of-service' element={<TermsOfService />} />
+            <Route path='/terms' element={<TermsOfService />} />
             <Route path='/carrer-privacy-policy' element={<CareersPrivacyPolicy />} />
             <Route path="/community" element={
               <CommunityPage />
@@ -348,8 +297,9 @@ function App() {
                   session={session}
                   onSubmit={(result: string) => {
                     console.log("NDA submission result:", result);
-                    // Handle post-submission actions here
-                    if (result === "Approved" || result === "Pending" || result === "Requested permission") {
+                    const resLower = (result || "").toLowerCase();
+                    // Handle post-submission actions here (case-insensitive)
+                    if (resLower === "approved" || resLower === "pending" || resLower === "requested permission") {
                       // Redirect to appropriate page on success
                       window.location.href = "/";
                     }

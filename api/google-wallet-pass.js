@@ -3,7 +3,7 @@ import {
   buildWalletCardContentFromPayload,
   getWalletPayloadFieldValue,
   WALLET_CARD_ORGANIZATION_NAME,
-} from "./shared/walletPassModel.js";
+} from "../src/shared/walletPassModel.js";
 
 const UPSTREAM_GOOGLE_WALLET_ENDPOINT =
   "https://hushh-wallet.vercel.app/api/passes/google/create";
@@ -40,7 +40,7 @@ const getLocalGoogleWalletConfig = () => {
   const privateKey = process.env.GOOGLE_WALLET_PRIVATE_KEY?.replace(/\\n/g, "\n");
   const classSuffix =
     process.env.GOOGLE_WALLET_CLASS_SUFFIX?.trim() || "hushh_gold_investor_v1";
-  const origins = (process.env.GOOGLE_WALLET_ALLOWED_ORIGINS || "https://hushhtech.com")
+  const origins = (process.env.GOOGLE_WALLET_ALLOWED_ORIGINS || "http://localhost:8080,https://hushhtech.com")
     .split(",")
     .map((value) => value.trim())
     .filter(Boolean);
@@ -347,12 +347,11 @@ const getUpstreamGoogleWalletAvailability = async () => {
     });
 
     const availability = {
-      available: response.status !== 404,
-      provider: response.status === 404 ? "none" : "upstream",
-      message:
-        response.status === 404
-          ? GOOGLE_WALLET_UNAVAILABLE_MESSAGE
-          : "Google Wallet is ready.",
+      available: response.ok,
+      provider: response.ok ? "upstream" : "none",
+      message: response.ok
+        ? "Google Wallet is ready."
+        : GOOGLE_WALLET_UNAVAILABLE_MESSAGE,
     };
 
     upstreamAvailabilityCache = {

@@ -30,8 +30,11 @@ const AuthCallback: React.FC = () => {
   const getRedirectDestination = (hasCompletedOnboarding: boolean) => {
     // If custom redirect is set (e.g., /hushh-ai), use it
     if (customRedirect) return customRedirect;
-    // Otherwise, default behavior: onboarding or profile
-    return hasCompletedOnboarding ? '/hushh-user-profile' : FINANCIAL_LINK_ROUTE;
+    // Otherwise, default behavior: 
+    // If onboarding is done, go to profile.
+    // If not done, they MUST have a profile first (/user-registration) 
+    // before they can start the financial-link/onboarding.
+    return hasCompletedOnboarding ? '/hushh-user-profile' : '/user-registration';
   };
 
   const queueWelcomeToast = (userId?: string | null) => {
@@ -194,14 +197,14 @@ const AuthCallback: React.FC = () => {
                 size="lg"
                 onClick={() => navigate('/user-registration')}
               >
-                Set us your profile
+                Set up your profile
               </Button>
               <Button
                 variant="outline"
                 size="lg"
                 onClick={() => navigate('/community')}
               >
-                Checkout communnity posts
+                Check out community posts
               </Button>
             </Flex>
           </Flex>

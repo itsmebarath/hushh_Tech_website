@@ -1,7 +1,7 @@
 import {
   buildGoldPassPayload as buildSharedGoldPassPayload,
   buildWalletCardContent,
-} from "../../api/shared/walletPassModel.js";
+} from "../shared/walletPassModel.js";
 
 const HUSHH_WALLET_ENDPOINT = "/api/wallet-pass";
 const HUSHH_GOOGLE_WALLET_ENDPOINT = "/api/google-wallet-pass";
@@ -71,9 +71,11 @@ const DEFAULT_GOOGLE_WALLET_AVAILABILITY: GoogleWalletAvailability = {
   provider: "none",
 };
 
-let googleWalletAvailabilityCache: GoogleWalletAvailability | null = null;
-let googleWalletAvailabilityRequest: Promise<GoogleWalletAvailability> | null =
-  null;
+// Persistent cache for Google Wallet availability to survive component re-mounts
+const googleWalletState = {
+  cache: null as GoogleWalletAvailability | null,
+  request: null as Promise<GoogleWalletAvailability> | null,
+};
 
 const sanitizeForFilename = (value: string) => {
   const safe = value
@@ -118,6 +120,10 @@ async function readWalletError(response: Response, fallback: string) {
   return errorText || fallback;
 }
 
+export const buildGoldPassPayload = (input: WalletPassInput) => {
+  return buildSharedGoldPassPayload(input);
+};
+
 const submitWalletPassForm = (
   endpoint: string,
   payload: ReturnType<typeof buildGoldPassPayload>
@@ -142,9 +148,7 @@ const submitWalletPassForm = (
   window.setTimeout(() => form.remove(), 1000);
 };
 
-export const buildGoldPassPayload = (input: WalletPassInput) => {
-  return buildSharedGoldPassPayload(input);
-};
+
 
 export const buildGoldPassPreviewModel = (
   input: WalletPassInput
@@ -188,15 +192,15 @@ export async function fetchGoogleWalletAvailability(
 ): Promise<GoogleWalletAvailability> {
   const { force = false } = options;
 
-  if (!force && googleWalletAvailabilityCache) {
-    return googleWalletAvailabilityCache;
+  if (!force && googleWalletState.cache) {
+    return googleWalletState.cache;
   }
 
-  if (!force && googleWalletAvailabilityRequest) {
-    return googleWalletAvailabilityRequest;
+  if (!force && googleWalletState.request) {
+    return googleWalletState.request;
   }
 
-  googleWalletAvailabilityRequest = fetch(HUSHH_GOOGLE_WALLET_ENDPOINT, {
+  googleWalletState.request = fetch(HUSHH_GOOGLE_WALLET_ENDPOINT, {
     method: "GET",
   })
     .then(async (response) => {
@@ -217,15 +221,15 @@ export async function fetchGoogleWalletAvailability(
             : "none",
       };
 
-      googleWalletAvailabilityCache = availability;
+      googleWalletState.cache = availability;
       return availability;
     })
     .catch(() => DEFAULT_GOOGLE_WALLET_AVAILABILITY)
     .finally(() => {
-      googleWalletAvailabilityRequest = null;
+      googleWalletState.request = null;
     });
 
-  return googleWalletAvailabilityRequest;
+  return googleWalletState.request;
 }
 
 export async function requestHushhGoldPass(

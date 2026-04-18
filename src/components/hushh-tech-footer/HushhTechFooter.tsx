@@ -87,8 +87,8 @@ const HushhTechFooter: React.FC<HushhTechFooterProps> = ({
       icon: isAuthenticated ? "person" : "login",
       label: isAuthenticated ? "Profile" : "Log In",
       path: isAuthenticated
-        ? "/profile"
-        : buildLoginRedirectPath("/profile"),
+        ? "/hushh-user-profile"
+        : buildLoginRedirectPath("/hushh-user-profile"),
     },
   ];
 

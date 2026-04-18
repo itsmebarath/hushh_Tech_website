@@ -12,6 +12,7 @@
 import express from 'express';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import fs from 'fs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -19,6 +20,16 @@ const __dirname = dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 8080;
 const DIST_DIR = join(__dirname, 'dist');
+
+// Verification: Ensure the SPA build exists before starting production server
+if (!fs.existsSync(join(DIST_DIR, 'index.html'))) {
+  console.error('❌ ERROR: Build directory "dist/" or "dist/index.html" is missing.');
+  console.error('   Please run "npm run build" before starting the production server.');
+	// We only exit if in production to allow dev mode (via proxy) to work
+	if (process.env.NODE_ENV === 'production') {
+		process.exit(1);
+	}
+}
 
 // ---------------------------------------------------------------------------
 // Middleware
@@ -129,7 +140,7 @@ const NO_CACHE_PATHS = [
   '/discover-fund-a', '/profile', '/community', '/delete-account', '/sign-nda',
 ];
 
-app.get('*', (req, res) => {
+app.use((req, res) => {
   // Set no-cache for dynamic pages
   const isNoCachePath = NO_CACHE_PATHS.some((p) => req.path === p || req.path.startsWith(p + '/'));
   if (isNoCachePath || req.path === '/' || req.path === '/index.html') {

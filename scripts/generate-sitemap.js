@@ -126,10 +126,21 @@ const generateSitemap = () => {
         const stats = fs.statSync(filePath);
         const lastMod = stats.mtime.toISOString();
         
+        // Map slug correctly to match posts.ts routes
+        // For 'market' folder dmuXXXX files, we map to /daily-market-update/
+        let finalSlug = "";
+        if (category === 'market' && slug.startsWith('dmu')) {
+          // 'dmu17apr' -> '17-apr'
+          const datePart = slug.replace('dmu', '').replace(/(\d+)([a-z]+)/, '$1-$2');
+          finalSlug = `daily-market-update/${datePart}-2025`;
+        } else {
+          finalSlug = `${category}/${slug}`;
+        }
+        
         // Add URL entry for the post
         postUrls.push(`
       <url>
-        <loc>${SITE_URL}/community/${category}/${slug}</loc>
+        <loc>${SITE_URL}/community/${finalSlug}</loc>
         <lastmod>${lastMod}</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
@@ -149,9 +160,27 @@ const generateSitemap = () => {
     </urlset>`;
 
   const filePath = path.join(__dirname, "../public/sitemap.xml");
+  const distPath = path.join(__dirname, "../dist/sitemap.xml");
+  
   fs.writeFileSync(filePath, sitemapContent);
+  if (fs.existsSync(path.dirname(distPath))) {
+    fs.writeFileSync(distPath, sitemapContent);
+  }
+
+  const robotsContent = `User-agent: *\nAllow: /\nSitemap: ${SITE_URL}/sitemap.xml`;
+  const publicRobotsPath = path.join(__dirname, "../public/robots.txt");
+  const distRobotsPath = path.join(__dirname, "../dist/robots.txt");
+
+  fs.writeFileSync(publicRobotsPath, robotsContent);
+  if (fs.existsSync(path.dirname(distRobotsPath))) {
+    fs.writeFileSync(distRobotsPath, robotsContent);
+  }
+
+  console.log("✅ Robots.txt successfully generated!");
+  if (fs.existsSync(distRobotsPath)) console.log("✅ Robots.txt also copied to dist/");
 
   console.log(`✅ Sitemap successfully generated at ${filePath}`);
+  if (fs.existsSync(distPath)) console.log(`✅ Sitemap also copied to ${distPath}`);
   console.log(`✅ Added ${staticUrls.length} static pages, ${communityUrls.length} community pages, and ${postCount} scanned posts`);
   console.log(`🔎 Verifying file: ${fs.existsSync(filePath) ? "✅ Exists" : "❌ Not Found"}`);
 };
