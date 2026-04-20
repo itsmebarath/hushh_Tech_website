@@ -1,16 +1,18 @@
 import React, { Suspense } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 const HomePage = React.lazy(() => import('./pages/home/ui'));
 const Leadership = React.lazy(() => import('./components/Leadership'));
 const Philosophy = React.lazy(() => import('./components/Philosophy'));
 import Footer from './components/Footer';
+import GoogleAnalyticsRouteTracker from './components/GoogleAnalyticsRouteTracker';
 import LoginPage from './pages/login/ui'
 const Contact = React.lazy(() => import('./pages/Contact'));
 import ScrollToTop from './components/ScrollToTop';
 import OnboardingShellAutoPadding from './components/OnboardingShellAutoPadding';
 import { ChakraProvider } from '@chakra-ui/react';
 import theme from './theme';
+bug-fixing
 const Consumers = React.lazy(() => import('./pages/services/consumers'));
 const Business = React.lazy(() => import('./pages/services/business'));
 const SignupPage = React.lazy(() => import('./pages/signup/ui'));
@@ -29,6 +31,26 @@ const DeleteAccountPage = React.lazy(() => import('./pages/delete-account'));
 import { useEffect, ReactNode } from 'react';
 const AuthCallback = React.lazy(() => import('./pages/AuthCallback'));
 const KYCVerificationPage = React.lazy(() => import('./pages/kyc-verification/page'));
+
+import Consumers from './pages/services/consumers';
+import Business from './pages/services/business';
+import SignupPage from './pages/signup/ui';
+import Faq from './pages/faq';
+import Career from './pages/career';
+import CommunityPage from './pages/community/ui';
+import CommunityPostPage from './pages/community/post-ui';
+import ReportDetailPage from './pages/reports/reportDetail';
+import BenefitsPage from './pages/benefits';
+import PrivacyPolicy from './pages/privacy-policy';
+import CareersPrivacyPolicy from './pages/career-privacy-policy';
+import CaliforniaPrivacyPolicy from './pages/california-privacy-policy';
+import EUUKPrivacyPolicy from './pages/eu-uk-privacy-policy';
+import DeleteAccountPage from './pages/delete-account';
+import { ReactNode } from 'react';
+import Profile from './pages/profile';
+import AuthCallback from './pages/AuthCallback';
+import KYCVerificationPage from './pages/kyc-verification/page';
+ main
 import NDARequestModalComponent from './components/NDARequestModal';
 const UserProfilePage = React.lazy(() => import('./pages/user-profile/page'));
 const InvestorProfilePage = React.lazy(() => import('./pages/investor-profile'));
@@ -76,15 +98,46 @@ const DocumentViewerPage = React.lazy(() => import('./pages/document-viewer'));
 const NDAAdminPage = React.lazy(() => import('./pages/nda-admin'));
 import { AuthSessionProvider, useAuthSession } from './auth/AuthSessionProvider';
 import AuthRequiredRoute from './components/AuthRequiredRoute';
+import HushhHackathonPage from './pages/hushh-hackathon/ui';
+import MetricsPage from './pages/metrics';
 
-// Google Analytics configuration
-const GA_TRACKING_ID = 'G-R58S9WWPM0';
 const KaiIndiaApp = React.lazy(() => import('./kai-india/pages'));
 
 // Content wrapper component that applies a consistent top padding
 const ContentWrapper = ({ children }: { children: ReactNode }) => {
+ bug-fixing
   return (
     <div className="pt-20">
+
+  const location = useLocation();
+  const isHomePage = location.pathname === '/' || location.pathname === '/signUp' || location.pathname === '/solutions';
+  const isAuthCallback = location.pathname.startsWith('/auth/callback');
+  const isUserRegistration = location.pathname === '/user-registration';
+  const isOnboarding = location.pathname.startsWith('/onboarding');
+  const isKycFlow = location.pathname.startsWith('/kyc-flow');
+  const isKycDemo = location.pathname.startsWith('/kyc-demo');
+  const isA2APlayground = location.pathname.startsWith('/a2a-playground');
+  const isInvestorGuide = location.pathname === '/investor-guide';
+  const isHushhAI = location.pathname.startsWith('/hushh-ai');
+  const isKai = location.pathname.startsWith('/kai');
+  const isStudio = location.pathname.startsWith('/studio');
+  const isHushhUserProfile = location.pathname.startsWith('/hushh-user-profile');
+  const isSignNda = location.pathname.startsWith('/sign-nda');
+  const isDocumentViewer = location.pathname.startsWith('/document-viewer');
+  const isInvestorProfile = location.pathname.startsWith('/investor-profile');
+  const isPublicInvestorProfile = location.pathname.startsWith('/investor/');
+  const isDiscoverFundA = location.pathname === '/discover-fund-a';
+  const isCommunity = location.pathname.startsWith('/community');
+  const isDeleteAccount = location.pathname === '/delete-account';
+  const isLogin = location.pathname.toLowerCase() === '/login';
+  const isSignup = location.pathname.toLowerCase() === '/signup';
+  const isProfile = location.pathname === '/profile';
+  const isHushhHackathon = location.pathname === '/hushh-hackathon';
+  const isMetrics = location.pathname === '/metrics' || location.pathname === '/metric';
+
+  return (
+    <div className={`${isHomePage || isAuthCallback || isUserRegistration || isOnboarding || isKycFlow || isKycDemo || isA2APlayground || isInvestorGuide || isHushhAI || isKai || isStudio || isHushhUserProfile || isSignNda || isDocumentViewer || isInvestorProfile || isPublicInvestorProfile || isDiscoverFundA || isCommunity || isDeleteAccount || isLogin || isSignup || isProfile || isHushhHackathon || isMetrics ? '' : 'mt-20'}`}>
+main
       {children}
     </div>
   );
@@ -101,6 +154,17 @@ const useLayoutVisibility = () => {
                        path.startsWith('/studio') || 
                        path.startsWith('/auth/callback');
 
+ bug-fixing
+
+  // All pages using HushhTechHeader — hide old global Navbar/Footer
+  const isKycFlow = location.pathname.startsWith('/kyc-flow');
+  const isKycDemo = location.pathname.startsWith('/kyc-demo');
+  const isA2APlayground = location.pathname.startsWith('/a2a-playground');
+  const isPublicInvestorProfile = location.pathname.startsWith('/investor/');
+  const isHushhHackathon = location.pathname === '/hushh-hackathon';
+  const isMetrics = location.pathname === '/metrics' || location.pathname === '/metric';
+  const hideOld = isHushhAI || isKai || isStudio || isHomePage || isOnboarding || isProfile || isFundA || isCommunity || isDeleteAccount || isLogin || isSignup || isSignNda || isDocumentViewer || isHushhUserProfile || isKycFlow || isKycDemo || isA2APlayground || isPublicInvestorProfile || isHushhHackathon || isMetrics;
+ main
   return {
     showNavbar: false, // Unified premium header used instead
     showFooter: !isSpecialApp,
@@ -108,6 +172,7 @@ const useLayoutVisibility = () => {
   };
 };
 
+bug-fixing
 // Google Analytics setup function
 const initializeGoogleAnalytics = () => {
   if (typeof window !== 'undefined' && window.gtag) {
@@ -124,6 +189,9 @@ function App() {
     initializeGoogleAnalytics();
   }, []);
 
+
+function App() {
+ main
   // Inner layout component that uses hooks for conditional rendering
   const AppLayout = () => {
     const { showNavbar, showFooter, showMobileNav } = useLayoutVisibility();
@@ -334,6 +402,8 @@ function App() {
             <Route path='/a2a-playground' element={<A2APlaygroundPage />} />
             <Route path='/receipt-generator' element={<ReceiptGeneratorPage />} />
             <Route path='/developer-docs' element={<DeveloperDocsPage />} />
+            <Route path='/metrics' element={<MetricsPage />} />
+            <Route path='/metric' element={<Navigate to='/metrics' replace />} />
             <Route path='/hushh-ai' element={<HushhAIPage />} />
             <Route path='/hushh-ai/login' element={<HushhAILoginPage />} />
             <Route path='/hushh-ai/signup' element={<HushhAISignupPage />} />
@@ -371,6 +441,7 @@ function App() {
     <ChakraProvider theme={theme}>
       <AuthSessionProvider>
         <Router>
+          <GoogleAnalyticsRouteTracker />
           <ScrollToTop />
           <OnboardingShellAutoPadding />
           <GlobalNDAGate>
