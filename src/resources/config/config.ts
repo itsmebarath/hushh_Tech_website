@@ -22,7 +22,12 @@ function readClientEnv(value: string | undefined, name: string, fallback = ""): 
     return value.trim();
   }
 
-  console.error(`[Config] Missing required client environment variable: ${name}`);
+  if (fallback === "development-only-warning") {
+    console.warn(`[Config] Optional development variable missing: ${name}. Some features like authentication or real-time data may be unavailable.`);
+    return "";
+  }
+
+  console.warn(`[Config] Missing required client environment variable: ${name}. Please check your .env file.`);
   return fallback;
 }
 

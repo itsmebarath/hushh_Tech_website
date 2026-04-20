@@ -174,8 +174,7 @@ const FundA = () => {
           </div>
 
           <h1
-            className="text-[2.75rem] leading-[1.1] font-normal text-black tracking-tight"
-            style={{ fontFamily: "'Playfair Display', serif" }}
+            className="text-[2.75rem] leading-[1.1] font-normal text-black tracking-tight font-playfair"
           >
             {heroTitle} <br />
             <span className="text-gray-400 italic font-light">{heroSubtitle}</span>
@@ -196,8 +195,7 @@ const FundA = () => {
                 {targetIRRLabel}
               </p>
               <p
-                className="text-[48px] leading-none font-medium text-ios-green mb-2"
-                style={{ fontFamily: "'Playfair Display', serif" }}
+                className="text-[48px] leading-none font-medium text-ios-green mb-2 font-playfair"
               >
                 {targetIRRValue}
               </p>
@@ -283,8 +281,7 @@ const FundA = () => {
                   {row.label}
                 </span>
                 <span
-                  className="text-xl font-medium text-ios-green"
-                  style={{ fontFamily: "'Playfair Display', serif" }}
+                  className="text-xl font-medium text-ios-green font-playfair"
                 >
                   {row.value}
                 </span>
@@ -397,8 +394,7 @@ const FundA = () => {
         {/* ── Join / CTA ── */}
         <section className="border-t border-gray-200 pt-8 mb-8">
           <h2
-            className="text-[22px] font-medium text-black tracking-tight mb-2"
-            style={{ fontFamily: "'Playfair Display', serif" }}
+            className="text-[22px] font-medium text-black tracking-tight mb-2 font-playfair"
           >
             {joinSectionTitle}
           </h2>
@@ -427,8 +423,7 @@ const FundA = () => {
 
         {/* ── Disclaimer ── */}
         <p
-          className="text-[9px] text-gray-400 text-center leading-relaxed italic max-w-xs mx-auto mb-4"
-          style={{ fontFamily: "'Playfair Display', serif" }}
+          className="text-[9px] text-gray-400 text-center leading-relaxed italic max-w-xs mx-auto mb-4 font-playfair"
         >
           Investing involves risk, including possible loss of principal. Past
           performance does not guarantee future results. Hushh Technologies is an

@@ -200,7 +200,9 @@ export function useStockQuotes(refreshInterval = 120000) {
       setError(null);
 
       if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
-        throw new Error('VITE_SUPABASE_URL or VITE_SUPABASE_ANON_KEY is not configured');
+        // Silently skip if not configured, fallback data is already set by default
+        setLoading(false);
+        return;
       }
       
       // Call Supabase edge function

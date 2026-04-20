@@ -9,41 +9,12 @@ import DeleteAccountModal from "./DeleteAccountModal";
 import { useStockQuotes, StockQuote, STOCK_LOGOS } from "../hooks/useStockQuotes";
 import config from "../resources/config/config";
 import { useAuthSession } from "../auth/AuthSessionProvider";
+import TickerStrip from "./navbar/TickerStrip";
 
 const WELCOME_TOAST_PENDING_KEY = "showWelcomeToast";
 const WELCOME_TOAST_USER_KEY = "showWelcomeToastUserId";
 
-// Chip-based ticker component - Light theme design
-const TickerChip = ({ quote, isLoading }: { quote: StockQuote; isLoading?: boolean }) => {
-  return (
-    <div className="group flex h-10 shrink-0 items-center gap-2 rounded-full bg-white border border-gray-200 shadow-sm pl-2 pr-3.5 hover:shadow-md transition-all">
-      {/* Logo in gray circle */}
-      <div className="flex w-7 h-7 items-center justify-center rounded-full bg-gray-100 shrink-0 overflow-hidden">
-        {quote.logo ? (
-          <img
-            src={quote.logo}
-            alt={`${quote.displaySymbol} logo`}
-            className="w-4 h-4 object-contain"
-            onError={(e) => {
-              (e.target as HTMLImageElement).style.display = 'none';
-            }}
-          />
-        ) : (
-          <span className="text-[10px] font-bold text-gray-600">{quote.displaySymbol.charAt(0)}</span>
-        )}
-      </div>
-      {/* Stock symbol - use displaySymbol for cleaner display */}
-      <span className="text-[12px] font-bold text-gray-800 leading-none">{quote.displaySymbol}</span>
-      {/* Percent change with arrow */}
-      <div className={`ml-0.5 flex items-center gap-0.5 ${quote.isUp ? 'text-green-600' : 'text-red-500'}`}>
-        <span className="text-[10px]">{quote.isUp ? '▲' : '▼'}</span>
-        <span className={`text-[11px] font-semibold ${isLoading ? 'animate-pulse' : ''}`}>
-          {Math.abs(quote.percentChange).toFixed(1)}%
-        </span>
-      </div>
-    </div>
-  );
-};
+
 
 export default function Navbar() {
   const { t, i18n } = useTranslation();
@@ -112,7 +83,7 @@ export default function Navbar() {
       setToastShown(true);
       return;
     }
-    
+
     toast({
       title: t('common.welcome'),
       description: t('common.signInMessage'),
@@ -184,7 +155,7 @@ export default function Navbar() {
     setToastShown(true); // Prevent welcome toast from showing
     setIsOpen(false); // Close sidebar drawer immediately
     onDeleteModalClose();
-    
+
     // Navigate to home after a brief delay for cleanup
     setTimeout(() => {
       navigate("/");
@@ -217,9 +188,9 @@ export default function Navbar() {
           <Link to="/" className="flex items-center gap-3">
             {/* Hushh Logo Image in Circle with subtle gradient */}
             <div className="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-gray-100 to-gray-200 border border-gray-200/50 shadow-sm shrink-0 overflow-hidden">
-              <Image 
-                src={hushhLogo} 
-                alt="Hushh Logo" 
+              <Image
+                src={hushhLogo}
+                alt="Hushh Logo"
                 className="w-7 h-7 object-contain"
               />
             </div>
@@ -238,11 +209,10 @@ export default function Navbar() {
                 <button
                   key={path}
                   onClick={() => handleLinkClick(path)}
-                  className={`rounded-full px-4 py-2 text-sm font-semibold transition-colors ${
-                    active
+                  className={`rounded-full px-4 py-2 text-sm font-semibold transition-colors ${active
                       ? 'bg-[#2F80ED]/10 text-[#1f6cc7]'
                       : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
-                  }`}
+                    }`}
                 >
                   {label}
                 </button>
@@ -275,7 +245,7 @@ export default function Navbar() {
                   </>
                 ) : (
                   <button
-                    onClick={() => navigate('/Login')}
+                    onClick={() => navigate('/login')}
                     className="inline-flex items-center justify-center rounded-full bg-[#2F80ED] px-4 py-2 text-sm font-semibold text-white hover:bg-[#1f6cc7] transition-colors"
                   >
                     {t('nav.login')}
@@ -299,39 +269,21 @@ export default function Navbar() {
 
         {/* Chip-based Ticker Strip - BELOW Navigation (hidden on onboarding & profile pages) */}
         {!hideTicker && (
-        <section className="relative w-full bg-[#F8F9FA] py-2.5 border-b border-gray-200">
-          {/* Ticker Marquee with Fade Mask */}
-          <div className="ticker-mask relative flex w-full overflow-hidden">
-            <div className="ticker-track flex items-center gap-3 px-4">
-              {/* First set of tickers */}
-              {displayQuotes.map((quote, idx) => (
-                <TickerChip 
-                  key={`first-${quote.symbol}-${idx}`} 
-                  quote={quote} 
-                  isLoading={quotesLoading && quotes.length === 0}
-                />
-              ))}
-              {/* Duplicate for seamless loop */}
-              {displayQuotes.map((quote, idx) => (
-                <TickerChip 
-                  key={`second-${quote.symbol}-${idx}`} 
-                  quote={quote}
-                  isLoading={quotesLoading && quotes.length === 0}
-                />
-              ))}
-            </div>
+          <div className="relative">
+            <TickerStrip 
+              quotes={displayQuotes} 
+              isLoading={quotesLoading && quotes.length === 0} 
+              showScrollIndicator={showScrollIndicator} 
+            />
+            {lastUpdated && (
+              <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-1.5 pointer-events-none hidden sm:flex">
+                <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+                <span className="text-[9px] font-medium text-gray-500">
+                  {lastUpdated.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                </span>
+              </div>
+            )}
           </div>
-
-          {/* Live Indicator - Small dot on right */}
-          {lastUpdated && (
-            <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
-              <span className="text-[9px] font-medium text-gray-500">
-                {lastUpdated.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-              </span>
-            </div>
-          )}
-        </section>
         )}
       </header>
 
@@ -389,7 +341,7 @@ export default function Navbar() {
                       {label}
                     </span>
                     <svg className="w-[7px] h-[12px] text-[#C7C7CC] shrink-0" viewBox="0 0 7 12" fill="none">
-                      <path d="M1 1L6 6L1 11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M1 1L6 6L1 11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                     {/* Separator line (skip last item) */}
                     {idx < arr.length - 1 && (
@@ -420,7 +372,7 @@ export default function Navbar() {
                       {label}
                     </span>
                     <svg className="w-[7px] h-[12px] text-[#C7C7CC] shrink-0" viewBox="0 0 7 12" fill="none">
-                      <path d="M1 1L6 6L1 11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M1 1L6 6L1 11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                     {idx < arr.length - 1 && (
                       <div className="absolute bottom-0 right-0 h-[0.5px] bg-[#C6C6C8]" style={{ width: 'calc(100% - 56px)', marginLeft: '56px' }} />
@@ -444,7 +396,7 @@ export default function Navbar() {
                       <span className="text-[13px] text-[#8E8E93] leading-tight mt-0.5">$1 or use coupon code</span>
                     </div>
                     <svg className="w-[7px] h-[12px] text-[#C7C7CC] shrink-0" viewBox="0 0 7 12" fill="none">
-                      <path d="M1 1L6 6L1 11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M1 1L6 6L1 11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </button>
                 </div>
@@ -483,7 +435,7 @@ export default function Navbar() {
                       </div>
                       <span className="text-[17px] text-black flex-grow text-left leading-none">Book Consultation</span>
                       <svg className="w-[7px] h-[12px] text-[#C7C7CC] shrink-0" viewBox="0 0 7 12" fill="none">
-                        <path d="M1 1L6 6L1 11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M1 1L6 6L1 11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
                       <div className="absolute bottom-0 right-0 h-[0.5px] bg-[#C6C6C8]" style={{ width: 'calc(100% - 56px)', marginLeft: '56px' }} />
                     </button>
@@ -496,7 +448,7 @@ export default function Navbar() {
                       </div>
                       <span className="text-[17px] text-black flex-grow text-left leading-none">Transaction History</span>
                       <svg className="w-[7px] h-[12px] text-[#C7C7CC] shrink-0" viewBox="0 0 7 12" fill="none">
-                        <path d="M1 1L6 6L1 11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M1 1L6 6L1 11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
                     </button>
                   </div>
@@ -517,7 +469,7 @@ export default function Navbar() {
                       {t('nav.viewProfile')}
                     </span>
                     <svg className="w-[7px] h-[12px] text-[#C7C7CC] shrink-0" viewBox="0 0 7 12" fill="none">
-                      <path d="M1 1L6 6L1 11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M1 1L6 6L1 11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                     <div className="absolute bottom-0 right-0 h-[0.5px] bg-[#C6C6C8]" style={{ width: 'calc(100% - 56px)', marginLeft: '56px' }} />
                   </button>
@@ -549,14 +501,14 @@ export default function Navbar() {
                   </button>
                 ) : (
                   <button
-                    onClick={() => handleLinkClick("/Login")}
+                    onClick={() => handleLinkClick("/login")}
                     className="w-full h-[50px] rounded-[12px] bg-[#007AFF] text-white font-semibold text-[17px] active:scale-[0.98] active:opacity-90 transition-all flex items-center justify-center shadow-sm"
                   >
                     {t('nav.login')}
                   </button>
                 )}
                 <p className="text-center text-[13px] text-[#8E8E93] font-normal mt-4">
-                  Version 2.4.0 (Build 302)
+                  Version {__APP_VERSION__} ({__GIT_COMMIT__})
                 </p>
               </div>
             </div>
@@ -571,49 +523,7 @@ export default function Navbar() {
         onAccountDeleted={handleAccountDeleted}
       />
 
-      {/* Chip-based Ticker Styles */}
-      <style>{`
-        /* Ticker mask for fade edges */
-        .ticker-mask {
-          mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
-          -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
-        }
-        
-        /* Ticker animation */
-        .ticker-track {
-          display: flex;
-          animation: ticker-scroll 40s linear infinite;
-          width: max-content;
-        }
-        
-        @keyframes ticker-scroll {
-          0% {
-            transform: translateX(0);
-          }
-          100% {
-            transform: translateX(-50%);
-          }
-        }
-        
-        /* Pause animation on hover */
-        .ticker-mask:hover .ticker-track {
-          animation-play-state: paused;
-        }
-        
-        /* Scroll indicator bounce animation */
-        .scroll-indicator-arrow {
-          animation: bounce-down 1.5s ease-in-out infinite;
-        }
-        
-        @keyframes bounce-down {
-          0%, 100% {
-            transform: translateY(0);
-          }
-          50% {
-            transform: translateY(4px);
-          }
-        }
-      `}</style>
+
     </>
   );
 }

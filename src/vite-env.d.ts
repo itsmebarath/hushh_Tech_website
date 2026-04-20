@@ -40,3 +40,8 @@ interface ImportMetaEnv {
 interface ImportMeta {
   readonly env: ImportMetaEnv;
 }
+
+// Build-time constants injected by Vite
+declare const __APP_VERSION__: string;
+declare const __BUILD_TIMESTAMP__: string;
+declare const __GIT_COMMIT__: string;

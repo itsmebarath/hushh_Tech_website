@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import img from "../../files/img.png";
 import img2 from "../../files/img (1).png";
 import { Box, Container, Heading, Text, SimpleGrid, Flex, Image, VStack, HStack, Icon } from "@chakra-ui/react";
@@ -6,6 +7,7 @@ import { FaCheckCircle } from "react-icons/fa";
 import SEO from "./SEO";
 
 export default function Leadership() {
+  const navigate = useNavigate();
   return (
     <Box bg="white">
       <SEO
@@ -96,7 +98,7 @@ export default function Leadership() {
               bg="white"
               p={6}
               borderRadius="2xl"
-              // boxShadow="sm"
+              boxShadow="sm"
               className="border-gray-100"
             >
               <Heading as="h3" fontSize="xl" color={'#1D1D1F'} mb={4} fontWeight="500">
@@ -112,7 +114,7 @@ export default function Leadership() {
               bg="white"
               p={6}
               borderRadius="2xl"
-              // boxShadow="sm"
+              boxShadow="sm"
               className="border-gray-100"
             >
               <Heading as="h3" fontSize="xl" color={'#1D1D1F'} mb={4} fontWeight="500">
@@ -127,7 +129,7 @@ export default function Leadership() {
               bg="white"
               p={6}
               borderRadius="2xl"
-              // boxShadow="sm"
+              boxShadow="sm"
               className="border-gray-100"
             >
               <Heading as="h3" fontSize="xl" color={'#1D1D1F'} mb={4} fontWeight="500">
@@ -142,7 +144,7 @@ export default function Leadership() {
               bg="white"
               p={6}
               borderRadius="2xl"
-              // boxShadow="sm"
+              boxShadow="sm"
               className="border-gray-100"
             >
               <Heading as="h3" fontSize="xl" color={'#1D1D1F'} mb={4} fontWeight="500">
@@ -201,7 +203,7 @@ export default function Leadership() {
                 mb={6}
                 border="3px solid #0891B2"
               >
-                <Image src={img} alt="Manish Sainani" w="full" h="full" objectFit="cover" />
+                <Image src={img} alt="Manish Sainani" w="full" h="full" objectFit="cover" loading="lazy" />
               </Box>
 
               <Heading as="h3" fontSize="2xl" mb={2}>
@@ -238,7 +240,7 @@ export default function Leadership() {
                 mb={6}
                 border="3px solid #0891B2"
               >
-                <Image src={img2} alt="Justin Donaldson" w="full" h="full" objectFit="cover" />
+                <Image src={img2} alt="Justin Donaldson" w="full" h="full" objectFit="cover" loading="lazy" />
               </Box>
 
               <Heading as="h3" fontSize="2xl" mb={2}>
@@ -406,7 +408,7 @@ export default function Leadership() {
               color="white"
 
               borderRadius="full"
-              onClick={() => window.location.href = "/contact"}
+              onClick={() => navigate("/contact")}
               fontWeight="medium"
               px={{ md: 16, base: 4 }}
               py={2}
@@ -420,7 +422,7 @@ export default function Leadership() {
               bg="transparent"
               color="#0891B2"
               py={2}
-              onClick={() => window.location.href = "/signUp"}
+              onClick={() => navigate("/signup")}
               px={{ md: 16, base: 4 }}
               borderRadius="full"
               fontWeight="medium"

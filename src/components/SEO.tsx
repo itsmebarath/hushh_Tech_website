@@ -13,7 +13,7 @@ export default function SEO({ title, description, image, url }: SEOProps) {
   const fullTitle = title ? `${title} | ${siteTitle}` : siteTitle;
   const metaDescription = description || 'Hushh Technologies provides secure, identity-driven solutions and investment frameworks.';
   const metaImage = image || 'https://hushhtech.com/images/hushh-logo-new.png';
-  const metaUrl = url || 'https://hushhtech.com';
+  const metaUrl = url || (typeof window !== 'undefined' ? `${window.location.origin}${window.location.pathname}` : 'https://hushhtech.com');
 
   return (
     <Helmet>
@@ -21,6 +21,7 @@ export default function SEO({ title, description, image, url }: SEOProps) {
       <title>{fullTitle}</title>
       <meta name="title" content={fullTitle} />
       <meta name="description" content={metaDescription} />
+      <link rel="canonical" href={metaUrl} />
 
       {/* Open Graph / Facebook */}
       <meta property="og:type" content="website" />

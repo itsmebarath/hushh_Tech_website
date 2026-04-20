@@ -100,7 +100,7 @@ export default function Footer() {
                   Benefits
                 </a>
                 <a 
-                  href="/careers" 
+                  href="/career" 
                   className="py-2 text-gray-300 hover:text-white text-base font-medium flex items-center justify-between group block"
                 >
                   Careers
@@ -199,9 +199,8 @@ export default function Footer() {
           </a>
         </div>
 
-        {/* Copyright */}
         <p className="text-gray-400 text-sm font-normal mb-4">
-          © 2025 Hushh All Rights Reserved.
+          © {new Date().getFullYear()} Hushh All Rights Reserved.
         </p>
 
         {/* Disclaimer */}

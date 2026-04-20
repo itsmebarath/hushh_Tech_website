@@ -14,7 +14,7 @@
  * Logic stays in logic.ts — zero changes there.
  */
 import { useHomeLogic } from "./logic";
-import HushhTechHeader from "../../components/hushh-tech-header/HushhTechHeader";
+
 import HushhTechFooter, {
   HushhFooterTab,
 } from "../../components/hushh-tech-footer/HushhTechFooter";
@@ -23,7 +23,7 @@ import HushhTechCta, {
 } from "../../components/hushh-tech-cta/HushhTechCta";
 
 /* ── Consistent heading style (same as onboarding/profile) ── */
-const playfair = { fontFamily: "'Playfair Display', serif" };
+
 
 import SEO from "../../components/SEO";
 
@@ -53,8 +53,7 @@ export default function HomePage() {
             </span>
           </div>
           <h1
-            className="text-[2.75rem] leading-[1.1] font-normal text-black tracking-tight font-serif"
-            style={playfair}
+            className="text-[2.75rem] leading-[1.1] font-normal text-black tracking-tight font-playfair"
           >
             Investing in <br /> the{" "}
             <span className="text-gray-400 italic font-light">Future.</span>
@@ -73,8 +72,7 @@ export default function HomePage() {
             </span>
             <div>
               <h3
-                className="text-lg font-medium mb-1 font-serif"
-                style={playfair}
+                className="text-lg font-medium mb-1 font-playfair"
               >
                 AI-Powered
               </h3>
@@ -89,8 +87,7 @@ export default function HomePage() {
             </span>
             <div>
               <h3
-                className="text-lg font-medium mb-1 font-serif"
-                style={playfair}
+                className="text-lg font-medium mb-1 font-playfair"
               >
                 Human-Led
               </h3>
@@ -144,8 +141,7 @@ export default function HomePage() {
         <section>
           <p className="text-[10px] uppercase tracking-[0.2em] text-gray-400 mb-2 font-medium">Why Hushh</p>
           <h2
-            className="text-2xl font-medium mb-8 tracking-tight font-serif"
-            style={playfair}
+            className="text-2xl font-medium mb-8 tracking-tight font-playfair"
           >
             The Hushh Advantage
           </h2>
@@ -185,8 +181,7 @@ export default function HomePage() {
                     Flagship Product
                   </span>
                   <h2
-                    className="text-3xl font-medium font-serif"
-                    style={playfair}
+                    className="text-3xl font-medium font-playfair"
                   >
                     Fund A
                   </h2>
@@ -199,13 +194,13 @@ export default function HomePage() {
               <div className="space-y-4 my-2">
                 <div>
                   <span className="text-xs text-white/50 block mb-1">Target Net IRR</span>
-                  <span className="text-[48px] font-serif font-light tracking-tighter text-ios-green leading-none" style={playfair}>
+                  <span className="text-[48px] font-playfair font-light tracking-tighter text-ios-green leading-none">
                     18-23%
                   </span>
                 </div>
                 <div>
                   <span className="text-xs text-white/50 block mb-1">Inception Year</span>
-                  <span className="font-serif text-[36px] leading-none" style={playfair}>2024</span>
+                  <span className="font-playfair text-[36px] leading-none">2024</span>
                 </div>
               </div>
 
@@ -270,8 +265,7 @@ export default function HomePage() {
         {/* ── Disclaimer ── */}
         <footer className="mb-8">
           <p
-            className="text-[10px] text-gray-400 text-center leading-relaxed italic max-w-xs mx-auto font-serif"
-            style={playfair}
+            className="text-[10px] text-gray-400 text-center leading-relaxed italic max-w-xs mx-auto font-playfair"
           >
             Investing involves risk, including possible loss of principal. Past
             performance does not guarantee future results. Hushh Technologies is

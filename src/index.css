@@ -1,5 +1,5 @@
 /* Google Fonts — DM Sans kept for onboarding/utility classes */
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap");
+
 
 @tailwind base;
 @tailwind components;
@@ -103,7 +103,6 @@ body {
   background: linear-gradient(265.3deg, #e54d60 8.81%, #a342ff 94.26%);
   -webkit-background-clip: text;
   color: transparent;
-  border-color: linear-gradient(265.3deg, #e54d60 8.81%, #a342ff 94.26%);
 }
 
 .hushh-gradient-bg {
@@ -653,4 +652,40 @@ body,
     rgba(55, 65, 81, 0.5) 50%,
     rgba(31, 41, 55, 0.3) 75%
   );
+}
+
+/* ==========================================================================
+   Chip-based Ticker Styles (from Navbar)
+   ========================================================================== */
+.ticker-mask {
+  mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+}
+
+.ticker-track {
+  display: flex;
+  animation: ticker-scroll 40s linear infinite;
+  width: max-content;
+}
+
+@keyframes ticker-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.ticker-mask:hover .ticker-track {
+  animation-play-state: paused;
+}
+
+.scroll-indicator-arrow {
+  animation: bounce-down 1.5s ease-in-out infinite;
+}
+
+@keyframes bounce-down {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(4px); }
+}
+
+.font-playfair {
+  font-family: 'Playfair Display', serif;
 }
