@@ -23,7 +23,7 @@ describe("auth host policy", () => {
   it("routes unsupported hosts to the canonical public login URL", () => {
     const resolution = resolveOAuthHost(
       "/login",
-      "?redirect=%2Fprofile",
+      "?redirect=%2Fhushh-user-profile",
       "https://hushhtech.com/auth/callback",
       "https://hushh-tech-website-646258530541.us-central1.run.app"
     );
@@ -31,7 +31,7 @@ describe("auth host policy", () => {
     expect(resolution.supported).toBe(false);
     expect(resolution.canonicalOrigin).toBe("https://hushhtech.com");
     expect(resolution.canonicalEntryUrl).toBe(
-      "https://hushhtech.com/login?redirect=%2Fprofile"
+      "https://hushhtech.com/login?redirect=%2Fhushh-user-profile"
     );
   });
 

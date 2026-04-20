@@ -164,6 +164,7 @@ describe("wallet proxy routes", () => {
 
   it("reports Google Wallet health as unavailable when the upstream route is missing", async () => {
     const fetchMock = vi.fn().mockResolvedValue({
+      ok: false,
       status: 404,
     });
 

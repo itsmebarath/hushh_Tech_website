@@ -24,7 +24,7 @@ describe("startUnifiedOAuth", () => {
         location: {
           origin: "https://hushhtech.com",
           pathname: "/login",
-          search: "?redirect=%2Fprofile",
+          search: "?redirect=%2Fhushh-user-profile",
           assign: assignMock,
         },
       },
@@ -63,7 +63,7 @@ describe("startUnifiedOAuth", () => {
       ok: false,
       provider: "google",
       reason: "unsupported_host",
-      redirectTo: "https://hushhtech.com/signup?redirect=%2Fprofile",
+      redirectTo: "https://hushhtech.com/signup?redirect=%2Fhushh-user-profile",
     });
     expect(assignMock).not.toHaveBeenCalled();
   });
@@ -86,7 +86,7 @@ describe("startUnifiedOAuth", () => {
       expect.objectContaining({
         provider: "google",
         options: expect.objectContaining({
-          redirectTo: "https://hushhtech.com/auth/callback?redirect=%2Fprofile",
+          redirectTo: "https://hushhtech.com/auth/callback?redirect=%2Fhushh-user-profile",
           queryParams: { access_type: "offline", prompt: "consent" },
         }),
       })

@@ -437,7 +437,7 @@ describe("auth-aware guest routing", () => {
     await flush();
 
     expect(container.querySelector('[data-testid="location"]')?.textContent).toBe(
-      "/login?redirect=%2Fprofile"
+      "/login?redirect=%2Fhushh-user-profile"
     );
   });
 

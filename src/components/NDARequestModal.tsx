@@ -198,7 +198,7 @@ const InvestorProfilePage: React.FC<NDARequestModalProps> = ({
         
         // Redirect to profile page where NDA document modal can be shown
         // The profile page will handle showing the NDA document modal based on the status
-        window.location.href = "/profile";
+        window.location.href = "/hushh-user-profile";
       } else {
         toast({ title: "Unexpected Response", description: `Received: ${resData}`, status: "error", duration: 4000, isClosable: true });
         onSubmit(resData);

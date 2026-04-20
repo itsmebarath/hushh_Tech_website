@@ -16,6 +16,10 @@ export default {
         "ios-gray-bg": "#F5F5F7",         // Athens Gray — card backgrounds
         "ios-dark": "#1D1D1F",            // Shark — dark surfaces, Fund A card
         "hushh-text-muted": "#6B7280",
+        "hushh-footer-bg": "#0B0C10",
+        "hushh-border": "#1F2937",
+        "hushh-card-bg": "#161d2b",
+        "hushh-primary": "#135bec",
       },
       fontFamily: {
         display: ['"Playfair Display"', 'serif'],

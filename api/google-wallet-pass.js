@@ -347,7 +347,7 @@ const getUpstreamGoogleWalletAvailability = async () => {
     });
 
     const availability = {
-      available: response.ok,
+      available: !!response.ok,
       provider: response.ok ? "upstream" : "none",
       message: response.ok
         ? "Google Wallet is ready."

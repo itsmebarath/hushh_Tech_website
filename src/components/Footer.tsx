@@ -21,7 +21,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative z-10 bg-[#0B0C10] border-t border-[#1F2937]">
+    <footer className="relative z-10 bg-hushh-footer-bg border-t border-hushh-border">
       {/* Top Section: Identity & Contact */}
       <div className="px-6 pt-10 pb-6 max-w-7xl mx-auto">
         {/* Brand */}
@@ -43,12 +43,12 @@ export default function Footer() {
         </div>
 
         {/* Contact Action Panel */}
-        <div className="rounded-xl border border-[#1F2937] bg-[#161d2b] p-5 flex flex-col gap-4 shadow-sm mb-8">
+        <div className="rounded-xl border border-hushh-border bg-hushh-card-bg p-5 flex flex-col gap-4 shadow-sm mb-8">
           <div className="flex items-start justify-between">
             <div className="flex flex-col gap-1">
               <a 
                 href="tel:+18884621726" 
-                className="text-white text-lg font-bold leading-tight hover:text-[#135bec] transition-colors flex items-center gap-2"
+                className="text-white text-lg font-bold leading-tight hover:text-hushh-primary transition-colors flex items-center gap-2"
               >
                 (888) 462-1726
               </a>
@@ -56,8 +56,8 @@ export default function Footer() {
                 Mon-Fri: 9AM-6PM PST
               </p>
             </div>
-            <div className="bg-[#135bec]/20 p-2 rounded-full">
-              <FaPhone className="text-[#135bec]" />
+            <div className="bg-hushh-primary/20 p-2 rounded-full">
+              <FaPhone className="text-hushh-primary" />
             </div>
           </div>
         </div>
@@ -70,7 +70,7 @@ export default function Footer() {
           <h3 className="text-white tracking-wide text-sm uppercase font-bold text-opacity-80">
             Quick Links
           </h3>
-          <nav className="flex flex-col gap-0 border-l border-[#1F2937] pl-4">
+          <nav className="flex flex-col gap-0 border-l border-hushh-border pl-4">
             <div className="grid grid-cols-2 gap-x-8">
               <div className="space-y-0">
                 <a 
@@ -141,7 +141,7 @@ export default function Footer() {
           <h3 className="text-white tracking-wide text-sm uppercase font-bold text-opacity-80">
             Legal
           </h3>
-          <nav className="flex flex-col gap-0 border-l border-[#1F2937] pl-4">
+          <nav className="flex flex-col gap-0 border-l border-hushh-border pl-4">
             <a 
               href="/privacy-policy" 
               className="py-2 text-gray-300 hover:text-white text-base font-medium flex items-center justify-between group"
@@ -161,7 +161,7 @@ export default function Footer() {
               California Privacy Policy
             </a>
             <a 
-              href="/carrer-privacy-policy" 
+              href="/career-privacy-policy" 
               className="py-2 text-gray-300 hover:text-white text-base font-medium flex items-center justify-between group"
             >
               Careers Site Privacy Notice
@@ -171,7 +171,7 @@ export default function Footer() {
       </div>
 
       {/* Divider */}
-      <div className="w-full h-px bg-[#1F2937]"></div>
+      <div className="w-full h-px bg-hushh-border"></div>
 
       {/* Bottom Section: Regulatory & Social */}
       <div className="px-6 pt-8 pb-12 max-w-7xl mx-auto">
@@ -181,19 +181,19 @@ export default function Footer() {
             href="https://www.hushh.ai" 
             target="_blank" 
             rel="noopener noreferrer" 
-            className="w-10 h-10 rounded-full bg-[#1F2937] flex items-center justify-center hover:bg-[#135bec] transition-colors group"
+            className="w-10 h-10 rounded-full bg-hushh-border flex items-center justify-center hover:bg-hushh-primary transition-colors group"
           >
             <FaGlobe className="text-gray-400 group-hover:text-white text-[16px]" />
           </a>
           <a 
             href="mailto:support@hushh.ai" 
-            className="w-10 h-10 rounded-full bg-[#1F2937] flex items-center justify-center hover:bg-[#135bec] transition-colors group"
+            className="w-10 h-10 rounded-full bg-hushh-border flex items-center justify-center hover:bg-hushh-primary transition-colors group"
           >
             <FaAt className="text-gray-400 group-hover:text-white text-[16px]" />
           </a>
           <a 
             href="/community" 
-            className="w-10 h-10 rounded-full bg-[#1F2937] flex items-center justify-center hover:bg-[#135bec] transition-colors group"
+            className="w-10 h-10 rounded-full bg-hushh-border flex items-center justify-center hover:bg-hushh-primary transition-colors group"
           >
             <FaRss className="text-gray-400 group-hover:text-white text-[16px]" />
           </a>
@@ -205,7 +205,7 @@ export default function Footer() {
         </p>
 
         {/* Disclaimer */}
-        <div className="p-4 rounded-xl bg-[#161d2b]/50 border border-[#1F2937]/50">
+        <div className="p-4 rounded-xl bg-hushh-card-bg/50 border border-hushh-border/50">
           <p className="text-gray-500 text-xs leading-5">
             <span className="font-bold text-gray-400">Disclaimer:</span> Investment involves risk, including the possible loss of principal. Past performance does not guarantee future results. Please consult with a financial advisor before making investment decisions.
           </p>

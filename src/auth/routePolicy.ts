@@ -13,7 +13,7 @@ export const PUBLIC_MARKETING_ROUTE_PREFIXES = [
   "/",
   "/privacy-policy",
   "/faq",
-  "/carrer-privacy-policy",
+  "/career-privacy-policy",
   "/california-privacy-policy",
   "/eu-uk-jobs-privacy-policy",
   "/investor-guide",

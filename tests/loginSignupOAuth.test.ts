@@ -140,7 +140,7 @@ describe("login/signup OAuth UI", () => {
       supported: false,
       canonicalOrigin: "https://hushhtech.com",
       callbackUrl: "https://hushhtech.com/auth/callback",
-      canonicalEntryUrl: "https://hushhtech.com/login?redirect=%2Fprofile",
+      canonicalEntryUrl: "https://hushhtech.com/login?redirect=%2Fhushh-user-profile",
     });
 
     await act(async () => {
@@ -155,7 +155,7 @@ describe("login/signup OAuth UI", () => {
     await flush();
 
     expect(redirectToUrlMock).toHaveBeenCalledWith(
-      "https://hushhtech.com/login?redirect=%2Fprofile"
+      "https://hushhtech.com/login?redirect=%2Fhushh-user-profile"
     );
     expect(startOAuthMock).not.toHaveBeenCalled();
     expect(container.textContent).not.toContain("Continue with Apple");
@@ -170,7 +170,7 @@ describe("login/signup OAuth UI", () => {
       supported: false,
       canonicalOrigin: "https://hushhtech.com",
       callbackUrl: "https://hushhtech.com/auth/callback",
-      canonicalEntryUrl: "https://hushhtech.com/signup?redirect=%2Fprofile",
+      canonicalEntryUrl: "https://hushhtech.com/signup?redirect=%2Fhushh-user-profile",
     });
 
     await act(async () => {
@@ -185,7 +185,7 @@ describe("login/signup OAuth UI", () => {
     await flush();
 
     expect(redirectToUrlMock).toHaveBeenCalledWith(
-      "https://hushhtech.com/signup?redirect=%2Fprofile"
+      "https://hushhtech.com/signup?redirect=%2Fhushh-user-profile"
     );
     expect(startOAuthMock).not.toHaveBeenCalled();
     expect(container.textContent).not.toContain("Continue with Apple");

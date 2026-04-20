@@ -558,7 +558,7 @@ const KYCFormPage = () => {
       });
       
       // Redirect to profile page
-      navigate("/profile");
+      navigate("/hushh-user-profile");
       
     } catch (error: any) {
       console.error("Error submitting KYC verification:", error);
