@@ -9,6 +9,7 @@ import {
   Flex,
 } from "@chakra-ui/react";
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
+import SEO from "../components/SEO";
 
 interface FaqItem {
   question: string;
@@ -79,6 +80,10 @@ const FaqPage: React.FC = () => {
 
   return (
     <Container maxW="container.xl" py={12} px={{ base: 4, md: 6 }}>
+      <SEO 
+        title="Frequently Asked Questions" 
+        description="Find answers to common questions about Hushh Technologies' investment strategies, risk management, and human-first approach."
+      />
       {/* Main Header */}
       <Box textAlign="center" mb={16}>
         <Heading 

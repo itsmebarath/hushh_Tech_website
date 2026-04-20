@@ -23,6 +23,7 @@ import {
   Link as ChakraLink,
 } from "@chakra-ui/react";
 import { MapPin, Phone, Clock } from "lucide-react";
+import SEO from "../components/SEO";
 
 const reasonOptions = [
   "Infrastructure Consultation",
@@ -51,8 +52,6 @@ export default function Contact() {
     message: '',
     captcha: ''
   });
-
-  
 
   const [captchaError, setCaptchaError] = useState<string>('');
   const navigate = useNavigate();
@@ -115,6 +114,10 @@ export default function Contact() {
 
   return (
     <Container maxW="container.xl" py={12} px={{ base: 4, md: 6 }}>
+      <SEO 
+        title="Contact Us" 
+        description="Get in touch with Hushh Technologies. We're ready to transform your investment strategy with AI-powered solutions."
+      />
       {/* Main Header */}
       <Box textAlign="center" mb={8}>
         <Heading 

@@ -115,6 +115,10 @@ const initializeGoogleAnalytics = () => {
   }
 };
 
+import { PageSkeleton } from './components/ui/Skeleton';
+
+// (keeping existing imports above)
+
 function App() {
   useEffect(() => {
     initializeGoogleAnalytics();
@@ -129,14 +133,7 @@ function App() {
       <div className="min-h-screen flex flex-col">
         <HushhTechHeader />
         <ContentWrapper>
-          <Suspense fallback={
-            <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-hushh-footer-bg">
-              <div className="flex flex-col items-center gap-4">
-                <div className="h-12 w-12 animate-spin rounded-full border-4 border-hushh-border border-t-hushh-primary"></div>
-                <p className="text-sm font-medium text-gray-500">Loading...</p>
-              </div>
-            </div>
-          }>
+          <Suspense fallback={<PageSkeleton />}>
             <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/about/leadership" element={<Leadership />} />
