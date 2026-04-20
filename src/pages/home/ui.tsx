@@ -25,6 +25,8 @@ import HushhTechCta, {
 /* ── Consistent heading style (same as onboarding/profile) ── */
 const playfair = { fontFamily: "'Playfair Display', serif" };
 
+import SEO from "../../components/SEO";
+
 export default function HomePage() {
   const { session, primaryCTA, onNavigate } = useHomeLogic();
 
@@ -33,6 +35,10 @@ export default function HomePage() {
       data-page="home"
       className="bg-white antialiased text-gray-900 min-h-screen flex flex-col relative selection:bg-hushh-blue selection:text-white"
     >
+      <SEO 
+        title="AI-Powered Investing" 
+        description="The world's first AI-powered Berkshire Hathaway. Merging rigorous data science with human wisdom."
+      />
       {/* ═══ Header is now global in App.tsx ═══ */}
 
       {/* ═══ Main Content — max-w-md centered like all other pages ═══ */}

@@ -118,6 +118,8 @@ const RISK_COLORS: Record<string, string> = {
   "Liquidity Management": "text-hushh-blue",
 };
 
+import SEO from "../../components/SEO";
+
 const FundA = () => {
   const navigate = useNavigate();
   const {
@@ -153,6 +155,10 @@ const FundA = () => {
 
   return (
     <div className="bg-white text-gray-900 min-h-screen antialiased flex flex-col selection:bg-hushh-blue selection:text-white">
+      <SEO 
+        title="Aloha & Alpha Fund A" 
+        description="High growth asymmetric returns with downside protection. The flagship fund by Hushh Technologies."
+      />
       {/* ═══ Header is now global in App.tsx ═══ */}
 
       {/* ═══ Main ═══ */}

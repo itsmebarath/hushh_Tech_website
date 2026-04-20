@@ -16,6 +16,8 @@ import NDADocumentModal from "../../components/NDADocumentModal";
 /* ── Playfair heading style ── */
 const playfair = { fontFamily: "'Playfair Display', serif" };
 
+import SEO from "../../components/SEO";
+
 export default function CommunityPage() {
   const {
     filteredContent,
@@ -43,6 +45,10 @@ export default function CommunityPage() {
 
   return (
     <div className="bg-white text-gray-900 min-h-screen antialiased flex flex-col selection:bg-hushh-blue selection:text-white">
+      <SEO 
+        title="Community & Updates" 
+        description="Insights, news, and privacy technology updates from Hushh Technologies."
+      />
       {/* ═══ Header ═══ */}
       <HushhTechBackHeader
         onBackClick={handleBackClick}

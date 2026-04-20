@@ -83,13 +83,13 @@ const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ variant = 'light' }
                 onClick={() => changeLanguage(lang.code)}
                 className={`w-full flex items-center justify-between px-4 py-2.5 text-left text-sm transition-colors
                   ${isSelected 
-                    ? 'bg-[#135bec]/5 text-[#135bec] font-semibold' 
+                    ? 'bg-hushh-primary/5 text-hushh-primary font-semibold' 
                     : 'text-gray-700 hover:bg-gray-50'
                   }`}
               >
                 <span>{lang.name}</span>
                 {isSelected && (
-                  <FiCheck className="w-4 h-4 text-[#135bec]" />
+                  <FiCheck className="w-4 h-4 text-hushh-primary" />
                 )}
               </button>
             );

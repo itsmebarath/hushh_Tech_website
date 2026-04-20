@@ -18,9 +18,15 @@ import {
 } from "@chakra-ui/react";
 import { MapPin, Clock, ChevronRight, Rocket, DollarSign, Star } from "lucide-react";
 
+import SEO from "../../components/SEO";
+
 const CareerList = () => {
   return (
     <Container maxW="container.xl" px={{ base: 4, md: 6 }}>
+      <SEO 
+        title="Careers at Hushh" 
+        description="Join Hushh Technologies to revolutionize the investment industry with AI."
+      />
       {/* Main Header */}
       <Box 
         textAlign="center" 
