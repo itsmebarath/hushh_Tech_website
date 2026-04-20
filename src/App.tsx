@@ -1,16 +1,17 @@
 import React, { Suspense } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 const HomePage = React.lazy(() => import('./pages/home/ui'));
 const Leadership = React.lazy(() => import('./components/Leadership'));
 const Philosophy = React.lazy(() => import('./components/Philosophy'));
 import Footer from './components/Footer';
-const LoginPage = React.lazy(() => import('./pages/login/ui'));
+import LoginPage from './pages/login/ui'
 const Contact = React.lazy(() => import('./pages/Contact'));
 import ScrollToTop from './components/ScrollToTop';
 import OnboardingShellAutoPadding from './components/OnboardingShellAutoPadding';
 import { ChakraProvider } from '@chakra-ui/react';
 import theme from './theme';
+bug-fixing
 const Consumers = React.lazy(() => import('./pages/services/consumers'));
 const Business = React.lazy(() => import('./pages/services/business'));
 const SignupPage = React.lazy(() => import('./pages/signup/ui'));
@@ -29,6 +30,26 @@ const DeleteAccountPage = React.lazy(() => import('./pages/delete-account'));
 import { useEffect, ReactNode } from 'react';
 const AuthCallback = React.lazy(() => import('./pages/AuthCallback'));
 const KYCVerificationPage = React.lazy(() => import('./pages/kyc-verification/page'));
+
+import Consumers from './pages/services/consumers';
+import Business from './pages/services/business';
+import SignupPage from './pages/signup/ui';
+import Faq from './pages/faq';
+import Career from './pages/career';
+import CommunityPage from './pages/community/ui';
+import CommunityPostPage from './pages/community/post-ui';
+import ReportDetailPage from './pages/reports/reportDetail';
+import BenefitsPage from './pages/benefits';
+import PrivacyPolicy from './pages/privacy-policy';
+import CareersPrivacyPolicy from './pages/career-privacy-policy';
+import CaliforniaPrivacyPolicy from './pages/california-privacy-policy';
+import EUUKPrivacyPolicy from './pages/eu-uk-privacy-policy';
+import DeleteAccountPage from './pages/delete-account';
+import { ReactNode } from 'react';
+import Profile from './pages/profile';
+import AuthCallback from './pages/AuthCallback';
+import KYCVerificationPage from './pages/kyc-verification/page';
+ main
 import NDARequestModalComponent from './components/NDARequestModal';
 const UserProfilePage = React.lazy(() => import('./pages/user-profile/page'));
 const InvestorProfilePage = React.lazy(() => import('./pages/investor-profile'));
@@ -76,16 +97,44 @@ const DocumentViewerPage = React.lazy(() => import('./pages/document-viewer'));
 const NDAAdminPage = React.lazy(() => import('./pages/nda-admin'));
 import { AuthSessionProvider, useAuthSession } from './auth/AuthSessionProvider';
 import AuthRequiredRoute from './components/AuthRequiredRoute';
-const NotFound = React.lazy(() => import('./pages/NotFound'));
 
-// Google Analytics configuration
-const GA_TRACKING_ID = 'G-R58S9WWPM0';
 const KaiIndiaApp = React.lazy(() => import('./kai-india/pages'));
 
 // Content wrapper component that applies a consistent top padding
 const ContentWrapper = ({ children }: { children: ReactNode }) => {
+ bug-fixing
   return (
     <div className="pt-20">
+
+  const location = useLocation();
+  const isHomePage = location.pathname === '/' || location.pathname === '/signUp' || location.pathname === '/solutions';
+  const isAuthCallback = location.pathname.startsWith('/auth/callback');
+  const isUserRegistration = location.pathname === '/user-registration';
+  const isOnboarding = location.pathname.startsWith('/onboarding');
+  const isKycFlow = location.pathname.startsWith('/kyc-flow');
+  const isKycDemo = location.pathname.startsWith('/kyc-demo');
+  const isA2APlayground = location.pathname.startsWith('/a2a-playground');
+  const isInvestorGuide = location.pathname === '/investor-guide';
+  const isHushhAI = location.pathname.startsWith('/hushh-ai');
+  const isKai = location.pathname.startsWith('/kai');
+  const isStudio = location.pathname.startsWith('/studio');
+  const isHushhUserProfile = location.pathname.startsWith('/hushh-user-profile');
+  const isSignNda = location.pathname.startsWith('/sign-nda');
+  const isDocumentViewer = location.pathname.startsWith('/document-viewer');
+  const isInvestorProfile = location.pathname.startsWith('/investor-profile');
+  const isPublicInvestorProfile = location.pathname.startsWith('/investor/');
+  const isDiscoverFundA = location.pathname === '/discover-fund-a';
+  const isCommunity = location.pathname.startsWith('/community');
+  const isDeleteAccount = location.pathname === '/delete-account';
+  const isLogin = location.pathname.toLowerCase() === '/login';
+  const isSignup = location.pathname.toLowerCase() === '/signup';
+  const isProfile = location.pathname === '/profile';
+  const isHushhHackathon = location.pathname === '/hushh-hackathon';
+  const isMetrics = location.pathname === '/metrics' || location.pathname === '/metric';
+
+  return (
+    <div className={`${isHomePage || isAuthCallback || isUserRegistration || isOnboarding || isKycFlow || isKycDemo || isA2APlayground || isInvestorGuide || isHushhAI || isKai || isStudio || isHushhUserProfile || isSignNda || isDocumentViewer || isInvestorProfile || isPublicInvestorProfile || isDiscoverFundA || isCommunity || isDeleteAccount || isLogin || isSignup || isProfile || isHushhHackathon || isMetrics ? '' : 'mt-20'}`}>
+main
       {children}
     </div>
   );
@@ -102,12 +151,6 @@ const useLayoutVisibility = () => {
                        path.startsWith('/studio') || 
                        path.startsWith('/auth/callback');
 
-  // Mobile nav only shows on core app pages
-  const isCoreAppPage = path === '/' || 
-                        path === '/discover-fund-a' || 
-                        path === '/community' || 
-                        path.startsWith('/hushh-user-profile');
-
   return {
     showNavbar: false, // Unified premium header used instead
     showFooter: !isSpecialApp,
@@ -115,6 +158,7 @@ const useLayoutVisibility = () => {
   };
 };
 
+bug-fixing
 // Google Analytics setup function
 const initializeGoogleAnalytics = () => {
   if (typeof window !== 'undefined' && window.gtag) {
@@ -126,51 +170,57 @@ import { PageSkeleton } from './components/ui/Skeleton';
 
 // (keeping existing imports above)
 
-const AppLayout = () => {
-  const { showNavbar, showFooter, showMobileNav } = useLayoutVisibility();
-  const { session } = useAuthSession();
-  
-  return (
-    <div className="min-h-screen flex flex-col">
-      <HushhTechHeader />
-      <ContentWrapper>
-        <Suspense fallback={<PageSkeleton />}>
-          <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/about/leadership" element={<Leadership />} />
-          <Route path="/about/philosophy" element={<Philosophy />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/benefits" element={<BenefitsPage />} />
-          <Route path='/services/consumers' element={<Consumers />} />
-          <Route path='/services/business' element={<Business />} />
-          <Route path='/signup' element={<SignupPage />} />
-          <Route path='/faq' element={<Faq />} />
-          <Route path='/profile' element={
-            <AuthRequiredRoute>
-              <HushhUserProfilePage />
-            </AuthRequiredRoute>
-          } />
-          <Route path="/career" element={<Career />} />
-          <Route path="/career/*" element={<Career />} />
-          <Route path='/privacy-policy' element={<PrivacyPolicy />} />
-          <Route path='/terms-of-service' element={<TermsOfService />} />
-          <Route path='/terms' element={<TermsOfService />} />
-          <Route path='/career-privacy-policy' element={<CareersPrivacyPolicy />} />
-          <Route path="/community" element={
-            <CommunityPage />
-          } />
-          <Route path='/california-privacy-policy' element={<CaliforniaPrivacyPolicy />} />
-          <Route path='/eu-uk-jobs-privacy-policy' element={<EUUKPrivacyPolicy />} />
-          <Route path='/delete-account' element={
-            <AuthRequiredRoute>
-              <DeleteAccountPage />
-            </AuthRequiredRoute>
-          } />
-          <Route path="/community/*" element={
-            <CommunityPostPage />
-          } />
-          <Route path="/reports/:id" element={
+function App() {
+  useEffect(() => {
+    initializeGoogleAnalytics();
+  }, []);
+
+  // Inner layout component that uses hooks for conditional rendering
+  const AppLayout = () => {
+    const { showNavbar, showFooter, showMobileNav } = useLayoutVisibility();
+    const { session } = useAuthSession();
+    
+    return (
+      <div className="min-h-screen flex flex-col">
+        <HushhTechHeader />
+        <ContentWrapper>
+          <Suspense fallback={<PageSkeleton />}>
+            <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/about/leadership" element={<Leadership />} />
+            <Route path="/about/philosophy" element={<Philosophy />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/benefits" element={<BenefitsPage />} />
+            <Route path='/services/consumers' element={<Consumers />} />
+            <Route path='/services/business' element={<Business />} />
+            <Route path='/signup' element={<SignupPage />} />
+            <Route path='/faq' element={<Faq />} />
+            <Route path='/profile' element={
+              <AuthRequiredRoute>
+                <HushhUserProfilePage />
+              </AuthRequiredRoute>
+            } />
+            <Route path="/career" element={<Career />} />
+            <Route path="/career/*" element={<Career />} />
+            <Route path='/privacy-policy' element={<PrivacyPolicy />} />
+            <Route path='/terms-of-service' element={<TermsOfService />} />
+            <Route path='/terms' element={<TermsOfService />} />
+            <Route path='/career-privacy-policy' element={<CareersPrivacyPolicy />} />
+            <Route path="/community" element={
+              <CommunityPage />
+            } />
+            <Route path='/california-privacy-policy' element={<CaliforniaPrivacyPolicy />} />
+            <Route path='/eu-uk-jobs-privacy-policy' element={<EUUKPrivacyPolicy />} />
+            <Route path='/delete-account' element={
+              <AuthRequiredRoute>
+                <DeleteAccountPage />
+              </AuthRequiredRoute>
+            } />
+            <Route path="/community/*" element={
+              <CommunityPostPage />
+            } />
+            <Route path="/reports/:id" element={
 
             <ReportDetailPage />
 
@@ -312,72 +362,66 @@ const AppLayout = () => {
               />
             </AuthRequiredRoute>
 
-          } />
-          <Route path='/investor-profile' element={
-            <ProtectedRoute>
-              <InvestorProfilePage />
-            </ProtectedRoute>
-          } />
-          <Route path='/investor/:slug' element={<PublicInvestorProfilePage />} />
-          <Route path='/user-profile' element={
-            <AuthRequiredRoute>
-              <UserProfilePage />
-            </AuthRequiredRoute>
-          } />
-          <Route path='/your-profile' element={
-            <AuthRequiredRoute>
-              <YourProfilePage />
-            </AuthRequiredRoute>
-          } />
-          <Route path='/kyc-demo' element={<KYCDemoPage />} />
-          <Route path='/kyc-flow' element={<KycFlowPage />} />
-          <Route path='/a2a-playground' element={<A2APlaygroundPage />} />
-          <Route path='/receipt-generator' element={<ReceiptGeneratorPage />} />
-          <Route path='/developer-docs' element={<DeveloperDocsPage />} />
-          <Route path='/hushh-ai' element={<HushhAIPage />} />
-          <Route path='/hushh-ai/login' element={<HushhAILoginPage />} />
-          <Route path='/hushh-ai/signup' element={<HushhAISignupPage />} />
-          {/* Kai - Financial Intelligence Agent */}
-          {/* Real-time AI voice/video financial advisor powered by Gemini 2.0 Flash */}
-          <Route path='/kai' element={<KaiApp />} />
-          {/* Kai India - Indian Market Intelligence Dashboard */}
-          {/* Real-time NSE/BSE market data powered by Gemini 2.5 Flash with Google Search */}
-          <Route
-            path='/kai-india'
-            element={
-              <Suspense fallback={<div className="min-h-screen bg-black" />}>
-                <KaiIndiaApp />
-              </Suspense>
-            }
-          />
-          {/* Hushh Studio - FREE AI Video Generation */}
-          {/* Powered by Google Veo 3.1 - No login required, free for Indian audience */}
-          <Route path='/studio' element={<HushhStudioApp />} />
-          {/* Global NDA Signing Page */}
-          <Route path='/sign-nda' element={<SignNDAPage />} />
-          <Route path='/document-viewer' element={<DocumentViewerPage />} />
-          {/* NDA Admin Page - Password protected view of all NDA agreements */}
-          <Route path='/nda-admin' element={<NDAAdminPage />} />
-          {/* 404 Fallback */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-        </Suspense>
-      </ContentWrapper>
-      {showFooter && <Footer />}
-      {showMobileNav && <MobileBottomNav />}
-    </div>
-  );
-};
-
-function App() {
-  useEffect(() => {
-    initializeGoogleAnalytics();
-  }, []);
+            } />
+            <Route path='/investor-profile' element={
+              <ProtectedRoute>
+                <InvestorProfilePage />
+              </ProtectedRoute>
+            } />
+            <Route path='/investor/:slug' element={<PublicInvestorProfilePage />} />
+            <Route path='/user-profile' element={
+              <AuthRequiredRoute>
+                <UserProfilePage />
+              </AuthRequiredRoute>
+            } />
+            <Route path='/your-profile' element={
+              <AuthRequiredRoute>
+                <YourProfilePage />
+              </AuthRequiredRoute>
+            } />
+            <Route path='/kyc-demo' element={<KYCDemoPage />} />
+            <Route path='/kyc-flow' element={<KycFlowPage />} />
+            <Route path='/a2a-playground' element={<A2APlaygroundPage />} />
+            <Route path='/receipt-generator' element={<ReceiptGeneratorPage />} />
+            <Route path='/developer-docs' element={<DeveloperDocsPage />} />
+            <Route path='/hushh-ai' element={<HushhAIPage />} />
+            <Route path='/hushh-ai/login' element={<HushhAILoginPage />} />
+            <Route path='/hushh-ai/signup' element={<HushhAISignupPage />} />
+            {/* Kai - Financial Intelligence Agent */}
+            {/* Real-time AI voice/video financial advisor powered by Gemini 2.0 Flash */}
+            <Route path='/kai' element={<KaiApp />} />
+            {/* Kai India - Indian Market Intelligence Dashboard */}
+            {/* Real-time NSE/BSE market data powered by Gemini 2.5 Flash with Google Search */}
+            <Route
+              path='/kai-india'
+              element={
+                <Suspense fallback={<div className="min-h-screen bg-black" />}>
+                  <KaiIndiaApp />
+                </Suspense>
+              }
+            />
+            {/* Hushh Studio - FREE AI Video Generation */}
+            {/* Powered by Google Veo 3.1 - No login required, free for Indian audience */}
+            <Route path='/studio' element={<HushhStudioApp />} />
+            {/* Global NDA Signing Page */}
+            <Route path='/sign-nda' element={<SignNDAPage />} />
+            <Route path='/document-viewer' element={<DocumentViewerPage />} />
+            {/* NDA Admin Page - Password protected view of all NDA agreements */}
+            <Route path='/nda-admin' element={<NDAAdminPage />} />
+          </Routes>
+          </Suspense>
+        </ContentWrapper>
+        {showFooter && <Footer />}
+        {showMobileNav && <MobileBottomNav />}
+      </div>
+    );
+  };
 
   return (
     <ChakraProvider theme={theme}>
       <AuthSessionProvider>
         <Router>
+          <GoogleAnalyticsRouteTracker />
           <ScrollToTop />
           <OnboardingShellAutoPadding />
           <GlobalNDAGate>
